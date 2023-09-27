@@ -26,4 +26,6 @@ public class Hotel {
 	@Column(name="hotel_address")
 	private String hotelAddress;
 	
+	
+	
 }

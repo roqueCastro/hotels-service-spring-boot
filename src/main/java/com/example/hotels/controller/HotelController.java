@@ -5,10 +5,12 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotels.config.HotelsServiceConfiguraction;
 import com.example.hotels.model.Hotel;
+import com.example.hotels.model.HotelRooms;
 import com.example.hotels.model.PropertiesHotels;
 import com.example.hotels.services.IHotelService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,6 +32,15 @@ public class HotelController {
 	public List<Hotel> search() {
 		return (List<Hotel>) this.service.search();
 	}
+	
+	
+	
+	@GetMapping("hotels/{hotelId}")
+	public HotelRooms searchHotelById(@PathVariable long hotelId) {
+		return  this.service.searchHotelById(hotelId);
+	}
+	
+	
 	
 	
 	@GetMapping("hotels/read/properties")
