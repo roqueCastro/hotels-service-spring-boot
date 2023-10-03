@@ -14,6 +14,7 @@ import com.example.hotels.dao.IHotelDao;
 import com.example.hotels.model.Hotel;
 import com.example.hotels.model.HotelRooms;
 import com.example.hotels.model.Room;
+import com.example.hotels.services.client.RoomsFeingClient;
 
 @Service
 public class HotelServiceImpl implements IHotelService {
@@ -21,8 +22,11 @@ public class HotelServiceImpl implements IHotelService {
 	@Autowired
 	private IHotelDao hotelDao;
 	
+//	@Autowired
+//	private RestTemplate clientRest;
+	
 	@Autowired
-	private RestTemplate clientRest;
+	RoomsFeingClient roomsFeingClient;
 	
 	@Override
 	public List<Hotel> search() {		// TODO Auto-generated method stub
@@ -33,10 +37,14 @@ public class HotelServiceImpl implements IHotelService {
 	public HotelRooms searchHotelById(long hotelId) {
 		HotelRooms response = new HotelRooms();
 		Optional<Hotel> hotel = hotelDao.findById(hotelId);
-		Map<String, Long> pathVariable = new HashMap<String, Long>();
-		pathVariable.put("id", hotelId);
 		
-		List<Room> rooms = Arrays.asList(clientRest.getForObject("http://localhost:8082/rooms/{id}", Room[].class, pathVariable));
+		//REST TEMPLATE
+//		Map<String, Long> pathVariable = new HashMap<String, Long>();
+//		pathVariable.put("id", hotelId);
+//		List<Room> rooms = Arrays.asList(clientRest.getForObject("http://localhost:8082/rooms/{id}", Room[].class, pathVariable));
+		
+		//FEING
+		List<Room> rooms = roomsFeingClient.searchByHotelId(hotelId);
 		
 		response.setHotelId(hotel.get().getHotelId());
 		response.setHotelName(hotel.get().getHotelName());
