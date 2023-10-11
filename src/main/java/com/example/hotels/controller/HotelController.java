@@ -17,6 +17,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+
 
 
 @RestController
@@ -36,8 +39,14 @@ public class HotelController {
 	
 	
 	@GetMapping("hotels/{hotelId}")
+	//@CircuitBreaker(name="searchHotelByIdSupportCB", fallbackMethod = "searchHotelByIdAlternative")
+	@Retry(name="searchHotelByIdSupportRetry", fallbackMethod = "searchHotelByIdAlternative")
 	public HotelRooms searchHotelById(@PathVariable long hotelId) {
 		return  this.service.searchHotelById(hotelId);
+	}
+	
+	public HotelRooms searchHotelByIdAlternative(@PathVariable long hotelId, Throwable thr) {
+		return  this.service.searchHotelByIdWithOutRooms(hotelId);
 	}
 	
 	

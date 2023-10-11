@@ -8,4 +8,5 @@ import com.example.hotels.model.HotelRooms;
 public interface IHotelService {
 	List<Hotel> search();
 	HotelRooms searchHotelById(long hotelId);
+	HotelRooms searchHotelByIdWithOutRooms(long hotelId);
 }
