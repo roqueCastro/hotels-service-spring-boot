@@ -45,6 +45,8 @@ public class HotelController {
 		return  this.service.searchHotelById(hotelId);
 	}
 	
+	
+	@GetMapping("hotels-one/{hotelId}")
 	public HotelRooms searchHotelByIdAlternative(@PathVariable long hotelId, Throwable thr) {
 		return  this.service.searchHotelByIdWithOutRooms(hotelId);
 	}
