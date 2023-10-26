@@ -3,6 +3,8 @@ package com.example.hotels.controller;
 import java.util.List;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,8 @@ import io.github.resilience4j.retry.annotation.Retry;
 @RestController
 public class HotelController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
+	
 	@Autowired
 	private IHotelService service;
 	
@@ -33,6 +37,7 @@ public class HotelController {
 	
 	@GetMapping("hotels")
 	public List<Hotel> search() {
+		logger.info("Inicio de método search()");
 		return (List<Hotel>) this.service.search();
 	}
 	
@@ -42,12 +47,14 @@ public class HotelController {
 	//@CircuitBreaker(name="searchHotelByIdSupportCB", fallbackMethod = "searchHotelByIdAlternative")
 	@Retry(name="searchHotelByIdSupportRetry", fallbackMethod = "searchHotelByIdAlternative")
 	public HotelRooms searchHotelById(@PathVariable long hotelId) {
+		logger.info("Inicio de método searchHotelById()");
 		return  this.service.searchHotelById(hotelId);
 	}
 	
 	
 	@GetMapping("hotels-one/{hotelId}")
 	public HotelRooms searchHotelByIdAlternative(@PathVariable long hotelId, Throwable thr) {
+		logger.info("Inicio de método searchHotelByIdAlternative");
 		return  this.service.searchHotelByIdWithOutRooms(hotelId);
 	}
 	
