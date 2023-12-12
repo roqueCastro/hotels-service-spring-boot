@@ -11,6 +11,7 @@ import com.example.hotels.model.Room;
 
 @FeignClient("rooms")
 public interface RoomsFeingClient {
-	@RequestMapping(method = RequestMethod.GET, value = "rooms/{id}", consumes = "application/json")
+//	@RequestMapping(method = RequestMethod.GET, value = "rooms/{id}", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "rooms-by-id-hotel-with-reservations/{id}", consumes = "application/json")
 	public List<Room> searchByHotelId(@PathVariable long id);
 }
