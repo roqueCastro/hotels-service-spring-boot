@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<micrometer-tracing.version>1.0.1</micrometer-tracing.version>
+		<springfox.version>2.4.0</springfox.version> <!-- SPRING FOX VERSION -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -63,6 +64,25 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- MONGO DB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		
+		<!-- SPRING FOX -->
+		<dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+		
 		<!-- EUREKA SERVER -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -122,6 +142,11 @@
 	            <type>pom</type>
 	            <scope>import</scope>
 	        </dependency>
+	        
+	        <dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+			</dependency>
 			
 		</dependencies>
 	</dependencyManagement>
